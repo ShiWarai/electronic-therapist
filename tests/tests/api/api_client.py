@@ -39,3 +39,11 @@ class ApiClient:
             return json_data
         except UnexpectedResponse:
             return None
+
+    def get_question(self, id):
+        url = api_urls.question(self.base_url, id)
+        try:
+            json_data = self.__request('GET', url, expected_error=200, json_expected=True)
+            return json_data
+        except UnexpectedResponse:
+            return None
