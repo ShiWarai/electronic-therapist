@@ -21,7 +21,7 @@ def config(request):
         if os.path.exists(temp_dir):
             shutil.rmtree(temp_dir)
 
-    return {'browser': browser, 'web_url': "http://localhost/", 'api_url': "http://localhost:8080/",
+    return {'browser': browser, 'web_url': "http://localhost:8080/", 'api_url': "http://localhost:8000/",
             'base_temp_dir': temp_dir}
 
 
