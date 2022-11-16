@@ -1,6 +1,4 @@
 from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
-from webdriver_manager.chrome import ChromeDriverManager, ChromeType
 
 from tests.ui.pages_fixtures import *
 

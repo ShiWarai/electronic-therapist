@@ -1,7 +1,7 @@
 import selenium.common.exceptions
+import selenium.webdriver.support.expected_conditions as EC
 from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.support.wait import WebDriverWait
-import selenium.webdriver.support.expected_conditions as EC
 
 from tests.ui.locators.target_locators import BASE_PAGE_LOCATORS
 

@@ -1,5 +1,5 @@
-from pytest import fixture
 from _pytest.fixtures import FixtureRequest
+from pytest import fixture
 
 from tests.ui import pages_fixtures
 
