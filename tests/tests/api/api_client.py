@@ -8,20 +8,21 @@ from tests.api.api_exceptions import *
 
 class ApiClient:
 
-    def __init__(self, base_url):
+    def __init__(self, base_url, logger):
         self.base_url = base_url
+        self.logger = logger
 
         self.session = requests.Session()
 
     def __request(self, request_type: str, url: str, headers=None, data: dict = {}, expected_error=None,
                   json_expected=False):
 
-        # self.logger.info(f"Request to {url}, type {request_type}")
-        # self.logger.debug(f"Data = {data}")
+        self.logger.info(f"Request to {url}, type {request_type}")
+        self.logger.debug(f"Data = {data}")
         response = self.session.request(request_type, url, headers=headers, data=data)
 
-        # self.logger.info(f"Response status code - {response.status_code}")
-        # self.logger.info(f"Response content: {response.content}")
+        self.logger.info(f"Response status code - {response.status_code}")
+        self.logger.info(f"Response content: {response.content}")
 
         if json_expected:
             if (expected_error and response.status_code == expected_error) or not expected_error:

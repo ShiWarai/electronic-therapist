@@ -51,6 +51,7 @@ coverage.xml
 .hypothesis/
 .pytest_cache/
 *driver.exe
+temp/
 
 # Translations
 *.mo
