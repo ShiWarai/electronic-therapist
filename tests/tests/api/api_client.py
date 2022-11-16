@@ -50,8 +50,15 @@ class ApiClient:
         json_data = self.__request('GET', url, expected_error=200, json_expected=True)
         return json_data
 
-    def get_next_chain(self, prev_questions_and_answers: list):
+    def get_next_chain(self, questions_and_answers: list):
         url = api_urls.chain(self.base_url)
-        json_data = self.__request('PUT', url, data=json.dumps(prev_questions_and_answers),
-                                                    expected_error=200, json_expected=True)
+        json_data = self.__request('PUT', url, data=json.dumps(questions_and_answers),
+                                   expected_error=200, json_expected=True)
+        return json_data
+
+    def get_result_by_answers(self, questions_and_answers: list):
+        url = api_urls.answers(self.base_url)
+        json_data = self.__request('POST', url, data=json.dumps(questions_and_answers),
+                                   expected_error=200, json_expected=True)
+
         return json_data

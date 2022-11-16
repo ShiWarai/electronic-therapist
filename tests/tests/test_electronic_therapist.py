@@ -45,7 +45,7 @@ class TestElectronicTherapistAPI(BaseAPICase):
         assert next_question_id is not None
         assert self.client.get_question(next_question_id)['id'] == next_question_id
 
-    @pytest.mark.dependency(depends=["test_get_new_chain", "test_get_questions"])
+    @pytest.mark.dependency(name="test_get_next_chain", depends=["test_get_new_chain", "test_get_questions"])
     def test_get_next_chain(self):
         questions = self.client.get_all_questions()
 
@@ -53,3 +53,15 @@ class TestElectronicTherapistAPI(BaseAPICase):
 
         next_question_id = self.client.get_next_chain(questions_and_answers)
         assert next_question_id is not None
+        assert self.client.get_question(next_question_id)['id'] == next_question_id
+
+    @pytest.mark.dependency(depends=["test_get_next_chain"])
+    def test_get_result(self):
+        questions = self.client.get_all_questions()
+
+        questions_and_answers = generate_random_questions_and_answers_pairs([questions[0], questions[-1]])
+
+        result = self.client.get_result_by_answers(questions_and_answers)
+        assert result is not None
+        assert result['title'] is not None and result['title'] != ""
+        assert result['text'] is not None and result['text'] != ""
