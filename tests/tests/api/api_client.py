@@ -47,3 +47,11 @@ class ApiClient:
             return json_data
         except UnexpectedResponse:
             return None
+
+    def get_new_chain(self):
+        url = api_urls.chain(self.base_url)
+        try:
+            json_data = self.__request('GET', url, expected_error=200, json_expected=True)
+            return json_data
+        except UnexpectedResponse:
+            return None
