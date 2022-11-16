@@ -34,11 +34,8 @@ class ApiClient:
 
     def get_all_questions(self):
         url = api_urls.questions(self.base_url)
-        try:
-            json_data = self.__request('GET', url, expected_error=200, json_expected=True)
-            return json_data
-        except UnexpectedResponse:
-            return None
+        json_data = self.__request('GET', url, expected_error=200, json_expected=True)
+        return json_data
 
     def get_question(self, id):
         url = api_urls.question(self.base_url, id)
@@ -50,8 +47,11 @@ class ApiClient:
 
     def get_new_chain(self):
         url = api_urls.chain(self.base_url)
-        try:
-            json_data = self.__request('GET', url, expected_error=200, json_expected=True)
-            return json_data
-        except UnexpectedResponse:
-            return None
+        json_data = self.__request('GET', url, expected_error=200, json_expected=True)
+        return json_data
+
+    def get_next_chain(self, prev_questions_and_answers: list):
+        url = api_urls.chain(self.base_url)
+        json_data = self.__request('PUT', url, data=json.dumps(prev_questions_and_answers),
+                                                    expected_error=200, json_expected=True)
+        return json_data
