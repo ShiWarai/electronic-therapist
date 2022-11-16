@@ -26,16 +26,19 @@ def config(request):
 
 
 @pytest.fixture(scope='function')
-def driver(config):
-    # change for another system
+def driver(config, logger):
     browser = webdriver.Chrome(executable_path=config['browser'])
     browser.maximize_window()
 
-    browser.get(config['web_url'])
+    try:
+        logger.info("Enter the website")
+        browser.get(config['web_url'])
 
-    yield browser
-
-    browser.quit()
+        yield browser
+    except:
+        logger.error("Couldn't enter the website")
+    finally:
+        browser.quit()
 
 
 @pytest.fixture(scope='function')
