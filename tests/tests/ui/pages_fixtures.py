@@ -1,7 +1,8 @@
 import pytest
 
-from tests.ui.pages.main_page import MainPage
+from tests.ui.pages.index_page import IndexPage
+
 
 @pytest.fixture
-def main_page(driver):
-    return MainPage(driver)
+def index_page(driver):
+    return IndexPage(driver)

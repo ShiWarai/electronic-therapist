@@ -8,6 +8,7 @@ from tests.ui.locators.target_locators import BASE_PAGE_LOCATORS
 CLICK_RETRY = 3
 TIME_DELAY = 3
 
+
 def retry(func):
     def wrapper(*args, **kwargs):
         for i in range(CLICK_RETRY):
@@ -16,10 +17,11 @@ def retry(func):
             except selenium.common.exceptions.TimeoutException:
                 if i >= CLICK_RETRY - 1:
                     raise
+
     return wrapper
 
-class BasePage:
 
+class BasePage:
     locators = BASE_PAGE_LOCATORS()
 
     # setting driver for all tests of this class
@@ -30,7 +32,6 @@ class BasePage:
     @retry
     def find(self, locator) -> WebElement:
         return self.wait.until(EC.presence_of_element_located(locator))
-
 
     def click(self, locator):
         for i in range(CLICK_RETRY):
