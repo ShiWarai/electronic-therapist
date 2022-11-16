@@ -1,5 +1,6 @@
 from urllib.parse import urljoin
+from functools import reduce
 
-questions = lambda base_url: urljoin(base_url, 'questions')
-question = lambda base_url, id: urljoin(base_url, 'questions', id)
-chain = lambda base_url: urljoin(questions(base_url), 'chain')
+questions = lambda base_url: urljoin(base_url, 'questions/')
+question = lambda base_url, id: reduce(urljoin, [base_url, 'questions/', str(id)])
+chain = lambda base_url: reduce(urljoin, [base_url, 'questions/', 'chain/'])

@@ -14,17 +14,25 @@ class TestElectronicTherapistUI(BaseUICase):
 @pytest.mark.API
 class TestElectronicTherapistAPI(BaseAPICase):
 
+    @pytest.mark.dependency(name='test_get_questions')
     def test_get_questions(self):
         questions = self.client.get_all_questions()
 
-        assert questions is not None
-        assert questions != []
-        assert questions != {}
+        assert questions is not None and questions != [] and questions != {}
 
+    @pytest.mark.dependency(depends=["test_get_questions"])
     def test_get_question(self):
         questions = self.client.get_all_questions()
         id = questions[0]['id']  # Get first id
 
         question = self.client.get_question(id)
-        assert question is not None
-        assert question != {}
+        assert question is not None and question != {}
+        assert question['id'] == id
+        assert question['text'] != '' and question['text'] is not None
+
+    @pytest.mark.dependency(depends=["test_get_questions"])
+    def test_negative_get_question(self):
+        id = -1  # Ids > 0
+
+        question = self.client.get_question(id)
+        assert question is None or question == {}
