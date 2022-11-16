@@ -4,7 +4,7 @@ from pytest import fixture
 from tests.ui import pages_fixtures
 
 
-class BaseCase:
+class BaseUICase:
 
     @fixture(scope='function', autouse=True)
     def setup(self, driver, config, request: FixtureRequest):
