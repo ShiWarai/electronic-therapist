@@ -99,4 +99,5 @@ class TestElectronicTherapistAPI(BaseAPICase):
         result = self.client.get_result_by_answers(questions_and_answers)
         assert result is not None
         assert result['title'] is not None and result['title'] != ""
+        assert result['title'] in ("Следует обратиться к специалисту", "Есть причины беспокоится", "Всё хорошо")
         assert result['text'] is not None and result['text'] != ""
