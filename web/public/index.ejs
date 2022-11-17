@@ -7,14 +7,33 @@
 <script src="https://cdn.jsdelivr.net/npm/vue@3"></script>
 <script>const HOST = "http://<%- HOSTNAME %>:<%- PORT %>"</script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>electronic-therapist</title>
+    <title>Электронный терапевт</title>
+    <meta name="description" content="Веб-приложение для предварительной электронной консультации">
+    <link rel="icon" type="image/webp" sizes="2187x2187" href="assets/img/Терапевт_моб.webp">
+    <link rel="icon" type="image/webp" sizes="2187x2187" href="assets/img/Терапевт_моб.webp">
+    <link rel="icon" type="image/webp" sizes="2187x2187" href="assets/img/Терапевт_моб.webp">
+    <link rel="icon" type="image/webp" sizes="2187x2187" href="assets/img/Терапевт_моб.webp">
+    <link rel="icon" type="image/webp" sizes="2187x2187" href="assets/img/Терапевт_моб.webp">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/base.css">
 </head>
 
-<body class="d-flex flex-column justify-content-start" id="app" style="height: 100vh;min-height: 100vh;max-height: 100vh;">
+<body class="d-flex flex-column justify-content-start" id="body">
+    <h1 class="d-flex justify-content-center" id="main-header">Электронный терапевт</h1>
+    <main class="d-flex flex-column flex-grow-1 justify-content-around align-items-center" id="app">
+        <div class="d-flex flex-column justify-content-center page" id="welcome-page" v-if="current_page=='welcome'"><span class="d-flex justify-content-center" style="font-size: 32px;font-weight: bold;font-style: italic;text-align: center;margin-bottom: 12px;">На данном портале вы можете получить консультацию, ответив на пару простых вопросов</span><button class="btn btn-primary btn-lg mx-auto" id="start-btn" type="button" v-on:click="start_examination">Начать</button></div>
+        <div class="flex-grow-1 page" id="examination-page" v-if="current_page=='examination'">
+            <!-- Start: examination-component --><examination-component/><!-- End: examination-component -->
+        </div>
+        <div class="flex-grow-1 page" id="result-page" v-if="current_page=='result'">
+            <!-- Start: result-component --><result-component v-bind:questions_and_answers="questions_and_answers" /><!-- End: result-component -->
+        </div>
+    </main>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="assets/js/api.mjs" type="module"></script>
     <script src="assets/js/app.mjs" type="module"></script>
+    <script src="assets/js/examination.mjs" type="module"></script>
+    <script src="assets/js/result.mjs" type="module"></script>
 </body>
 
 </html>
