@@ -1,1 +1,1 @@
-__all__ = ['index_page']
+__all__ = ['main_page']
