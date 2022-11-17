@@ -4,7 +4,8 @@ import pytest
 
 from tests.api.base_api_case import BaseAPICase
 from tests.ui.base_ui_case import BaseUICase
-from tests.utils.generators import generate_random_questions_and_answers_pairs, generate_random_number_string
+from tests.utils.generators import generate_random_questions_and_answers_pairs,\
+                                    generate_random_number_string, generate_answer
 
 
 @pytest.mark.UI
@@ -34,6 +35,19 @@ class TestElectronicTherapistUI(BaseUICase):
 
         assert last_new[0] != last_new[1]
 
+    @pytest.mark.dependency(name="test_get_result")
+    def test_get_result(self):
+        assert self.index_page.pass_examination(generate_answer)
+
+        assert self.index_page.is_find(self.index_page.locators.RESULT_TEXT_LOCATOR)
+
+    @pytest.mark.dependency(name="test_restart_examination", depends=["test_get_result"])
+    def test_restart_examination(self):
+        assert self.index_page.pass_examination(generate_answer)
+
+        self.index_page.click(self.locators.RESULT_RETURN_HOME_LOCATOR)
+
+        assert self.index_page.is_find(self.index_page.locators.START_BUTTON_LOCATOR)
 
 @pytest.mark.API
 class TestElectronicTherapistAPI(BaseAPICase):
