@@ -111,3 +111,40 @@ async def get_question_by_id(id: int, response: Response):
             break
 
     return question
+
+
+@app.get("/chain")
+async def get_new_questions_chain():
+    return Chain.get_next(None)
+
+
+def expose_que_and_ans(answer_bodies: List[AnswerBody]):
+    questions_and_answers = list()
+
+    for answer_body in answer_bodies:
+        question = None
+        if not (answer_body.answer is not None and answer_body.answer != ""):
+            return None
+
+        for q in questions:
+            if q['id'] == answer_body.question_id:
+                question = q
+                break
+
+        if question is not None:
+            questions_and_answers.append((question, answer_body.answer))
+        else:
+            return None
+
+    return questions_and_answers
+
+
+@app.put("/chain")
+async def get_next_chain_question(answer_bodies: List[AnswerBody], response: Response):
+    questions_and_answers = expose_que_and_ans(answer_bodies)
+
+    if questions_and_answers is not None:
+        return Chain.get_next(questions_and_answers)
+    else:
+        response.status_code = 424
+        return None
