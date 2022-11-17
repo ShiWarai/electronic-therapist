@@ -9,7 +9,7 @@ from tests.utils.decorators import retry, wait
 
 from tests.ui.locators.target_locators import BASE_PAGE_LOCATORS
 
-N_RETRIES = 3
+N_RETRIES = 1
 BASE_DELAY = 1
 
 

@@ -45,7 +45,7 @@ class TestElectronicTherapistUI(BaseUICase):
     def test_restart_examination(self):
         assert self.index_page.pass_examination(generate_answer)
 
-        self.index_page.click(self.locators.RESULT_RETURN_HOME_LOCATOR)
+        self.index_page.click(self.index_page.locators.RESULT_RETURN_HOME_LOCATOR)
 
         assert self.index_page.is_find(self.index_page.locators.START_BUTTON_LOCATOR)
 
