@@ -20,10 +20,10 @@ app.add_middleware(
 )
 
 questions = (
-    {'id': 1, 'text': 'У вас есть проблемы со сном?', 'answers': ['Да', 'Нет', 'Не уверен']},
-    {'id': 2, 'text': 'Опишите проблему со сном', 'answers': []},
-    {'id': 3, 'text': 'У вас есть проблема с памятью?', 'answers': ['Да', 'Нет', 'Не уверен']},
-    {'id': 4, 'text': 'Опишите проблему с памятью', 'answers': []}
+    {'id': 1, 'text': 'У вас есть проблемы со сном?', 'answers': ['Да', 'Нет', 'Не уверен'], 'points': [-1, +1, 0]},
+    {'id': 2, 'text': 'Опишите проблему со сном', 'answers': [], 'point': 0},
+    {'id': 3, 'text': 'У вас есть проблема с памятью?', 'answers': ['Да', 'Нет', 'Не уверен'], 'points': [-1, +1, 0]},
+    {'id': 4, 'text': 'Опишите проблему с памятью', 'answers': [], 'point': 0}
 )
 
 paths = {
@@ -58,20 +58,6 @@ class AnswerBody(BaseModel):
 
 class Chain:
 
-    # @staticmethod
-    # def get_next(questions_and_answers: list) -> int:
-    #     if questions_and_answers:
-    #         question = questions_and_answers[len(questions_and_answers) - 1][0]
-    #
-    #         next_id = questions.index(question) + 1
-    #
-    #         if next_id < len(questions):
-    #             return questions[next_id]['id']
-    #         else:
-    #             return None
-    #
-    #     return questions[0]['id']
-
     @staticmethod
     def get_next(questions_and_answers: list) -> int:
         if questions_and_answers:
@@ -89,8 +75,34 @@ class Chain:
 
     @staticmethod
     def resolve_chain(questions_and_answers: list) -> Result:
-        title = "Всё хорошо"
-        text = "Результаты вашего теста показывают, что у вас нету проблем со здоровьем и вам не требуется помощь специалиста-терапевта"
+        points = 0
+
+        for q_and_a in questions_and_answers:
+            question: dict = q_and_a[0]
+            answer: str = q_and_a[1]
+
+            if len(question['answers']) > 0:
+                answer_n = question['answers'].index(answer)
+                if answer_n >= 0:
+                    points += question['points'][answer_n]
+            else:
+                points += question['point']
+
+        print(points)
+
+        if points > 0:
+            title = "Всё хорошо"
+            text = "Результаты вашего теста показывают, что у вас нету проблем со здоровьем и вам не требуется помощь " \
+                   "специалиста-терапевта"
+        elif points < 0:
+            title = "Следует обратиться к специалисту"
+            text = "Результаты вашего теста показывают, что у вас есть отклонения в здоровье и для дальнейшего " \
+                   "определения проблемы - лучше обратиться к реальному терапевту"
+        else:
+            title = "Есть причины беспокоится"
+            text = "Результаты вашего теста показывают, что у вас нету проблем со здоровьем и вам не требуется помощь " \
+                   "специалиста-терапевта"
+            
         return Result(title, text)
 
 
