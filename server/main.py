@@ -148,3 +148,14 @@ async def get_next_chain_question(answer_bodies: List[AnswerBody], response: Res
     else:
         response.status_code = 424
         return None
+
+
+@app.post("/answers")
+async def get_result_by_answers(answer_bodies: List[AnswerBody], response: Response):
+    questions_and_answers = expose_que_and_ans(answer_bodies)
+
+    if questions_and_answers is not None:
+        return Chain.resolve_chain(questions_and_answers)
+    else:
+        response.status_code = 424
+        return None
