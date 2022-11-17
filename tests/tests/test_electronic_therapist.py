@@ -1,3 +1,5 @@
+import time
+
 import pytest
 
 from tests.api.base_api_case import BaseAPICase
@@ -8,8 +10,10 @@ from tests.utils.generators import generate_random_questions_and_answers_pairs
 @pytest.mark.UI
 class TestElectronicTherapistUI(BaseUICase):
 
-    def test_enter(self):
-        pass
+    def test_start_examination(self):
+        self.index_page.start_new_examination()
+
+        assert self.index_page.find_visible(self.index_page.locators.TEXT_QUESTION_LOCATOR)
 
 
 @pytest.mark.API
