@@ -1,0 +1,69 @@
+#main-header {
+  padding-top: 16px;
+}
+
+html {
+  height: 100%;
+}
+
+#body {
+  height: 100%;
+  overflow: hidden;
+}
+
+.page {
+  width: 100%;
+  /*height: 100%;*/
+}
+
+#question-title {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+#question {
+  margin-top: 8px;
+  width: 60%;
+  font-style: italic;
+  font-size: 20px;
+  margin-bottom: 8px;
+}
+
+.btn {
+}
+
+#next-question {
+  margin-top: 12px;
+}
+
+#answers {
+  margin-top: 24px;
+  width: 80%;
+}
+
+#start-btn {
+}
+
+#answers-group {
+  width: 60%;
+  margin-bottom: 16px;
+}
+
+#examination-container {
+  padding-top: 16px;
+  padding-bottom: 16px;
+  height: 100%;
+}
+
+#answer-text {
+  width: 60%;
+  height: 100px;
+}
+
+#result-container {
+  height: 100%;
+}
+
+#welcome-page {
+}
+
