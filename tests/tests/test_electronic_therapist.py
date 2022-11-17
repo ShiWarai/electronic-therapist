@@ -4,7 +4,7 @@ import pytest
 
 from tests.api.base_api_case import BaseAPICase
 from tests.ui.base_ui_case import BaseUICase
-from tests.utils.generators import generate_random_questions_and_answers_pairs
+from tests.utils.generators import generate_random_questions_and_answers_pairs, generate_random_number_string
 
 
 @pytest.mark.UI
@@ -23,6 +23,16 @@ class TestElectronicTherapistUI(BaseUICase):
         last_new = self.index_page.next_question()  # Without answer selection
 
         assert last_new[0] == last_new[1]
+
+    @pytest.mark.dependency(name="test_next_question", depends=["test_start_examination"])
+    def test_next_question(self):
+        self.index_page.start_new_examination()
+
+        self.index_page.choose_any_answer(generate_random_number_string(10))
+
+        last_new = self.index_page.next_question()
+
+        assert last_new[0] != last_new[1]
 
 
 @pytest.mark.API
