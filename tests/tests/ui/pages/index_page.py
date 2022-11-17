@@ -10,3 +10,13 @@ class IndexPage(BasePage):
             self.click(self.locators.START_BUTTON_LOCATOR)
         else:
             raise Exception("No such button!")
+
+    def next_question(self) -> tuple:
+
+        last = self.find_visible(self.locators.TEXT_QUESTION_LOCATOR).text
+
+        self.click(self.locators.NEXT_BUTTON_LOCATOR)
+
+        new = self.find_visible(self.locators.TEXT_QUESTION_LOCATOR).text
+
+        return (last, new)
