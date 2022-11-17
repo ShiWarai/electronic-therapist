@@ -25,3 +25,10 @@ def generate_random_questions_and_answers_pairs(questions):
         questions_and_answers.append({"question_id": question['id'], 'answer': answer})
 
     return questions_and_answers
+
+
+def generate_answer(question: str) -> str:
+    if question.find('?'):
+        return 'Не уверен'
+    else:
+        return generate_random_string(24)
