@@ -89,8 +89,8 @@ class Chain:
 
     @staticmethod
     def resolve_chain(questions_and_answers: list) -> Result:
-        title = "Пока тест"
-        text = "Пока тут ничего нет, но скоро будет..."
+        title = "Всё хорошо"
+        text = "Результаты вашего теста показывают, что у вас нету проблем со здоровьем и вам не требуется помощь специалиста-терапевта"
         return Result(title, text)
 
 
