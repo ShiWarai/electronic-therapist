@@ -49,6 +49,14 @@ class TestElectronicTherapistUI(BaseUICase):
 
         assert self.index_page.is_find(self.index_page.locators.START_BUTTON_LOCATOR)
 
+    @pytest.mark.dependency(name="test_negative_restart_examination", depends=["test_get_result"])
+    def test_negative_restart_examination(self):
+        assert self.index_page.pass_examination(generate_answer)
+
+        # self.index_page.click(self.index_page.locators.RESULT_RETURN_HOME_LOCATOR)
+
+        assert not self.index_page.is_find(self.index_page.locators.START_BUTTON_LOCATOR)
+
 @pytest.mark.API
 class TestElectronicTherapistAPI(BaseAPICase):
 
@@ -96,8 +104,15 @@ class TestElectronicTherapistAPI(BaseAPICase):
 
         questions_and_answers = generate_random_questions_and_answers_pairs([questions[0], questions[-1]])
 
-        result = self.client.get_result_by_answers(questions_and_answers)
+        result: dict = self.client.get_result_by_answers(questions_and_answers)
         assert result is not None
+        assert 'title' in result.keys() and 'text' in result.keys()
         assert result['title'] is not None and result['title'] != ""
         assert result['title'] in ("Следует обратиться к специалисту", "Есть причины беспокоится", "Всё хорошо")
         assert result['text'] is not None and result['text'] != ""
+
+    @pytest.mark.dependency(depends=["test_get_next_chain"])
+    def test_negative_get_result(self):
+        questions_and_answers = None
+
+        assert not self.client.get_result_by_answers(questions_and_answers)

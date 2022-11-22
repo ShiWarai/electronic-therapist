@@ -58,7 +58,9 @@ class ApiClient:
 
     def get_result_by_answers(self, questions_and_answers: list):
         url = api_urls.answers(self.base_url)
-        json_data = self.__request('POST', url, data=json.dumps(questions_and_answers),
-                                   expected_error=200, json_expected=True)
-
-        return json_data
+        try:
+            json_data = self.__request('POST', url, data=json.dumps(questions_and_answers),
+                                       expected_error=200, json_expected=True)
+            return json_data
+        except UnexpectedResponse:
+            return None
