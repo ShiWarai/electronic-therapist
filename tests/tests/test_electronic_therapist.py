@@ -17,14 +17,6 @@ class TestElectronicTherapistUI(BaseUICase):
 
         assert self.index_page.find_visible(self.index_page.locators.TEXT_QUESTION_LOCATOR)
 
-    @pytest.mark.dependency(name="test_negative_next_question", depends=["test_start_examination"])
-    def test_negative_next_question(self):
-        self.index_page.start_new_examination()
-
-        last_new = self.index_page.next_question()  # Without answer selection
-
-        assert last_new[0] == last_new[1]
-
     @pytest.mark.dependency(name="test_next_question", depends=["test_start_examination"])
     def test_next_question(self):
         self.index_page.start_new_examination()
@@ -34,6 +26,14 @@ class TestElectronicTherapistUI(BaseUICase):
         last_new = self.index_page.next_question()
 
         assert last_new[0] != last_new[1]
+
+    @pytest.mark.dependency(name="test_negative_next_question", depends=["test_start_examination"])
+    def test_negative_next_question(self):
+        self.index_page.start_new_examination()
+
+        last_new = self.index_page.next_question()  # Without answer selection
+
+        assert last_new[0] == last_new[1]
 
     @pytest.mark.dependency(name="test_get_result")
     def test_get_result(self):
