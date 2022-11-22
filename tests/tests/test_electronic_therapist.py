@@ -96,7 +96,8 @@ class TestElectronicTherapistAPI(BaseAPICase):
 
         questions_and_answers = generate_random_questions_and_answers_pairs([questions[0], questions[-1]])
 
-        self.client.get_next_chain(questions_and_answers)
+        next_question_id = self.client.get_next_chain(questions_and_answers)
+        assert (next_question_id is None) or self.client.get_question(next_question_id)['id'] == next_question_id
 
     @pytest.mark.dependency(depends=["test_get_next_chain"])
     def test_get_result(self):
